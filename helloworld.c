@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void main() {
-	pritnf("Hello, world!");
+int main() {
+	pritnf("Hello, World!");
 	return 0;
 }
