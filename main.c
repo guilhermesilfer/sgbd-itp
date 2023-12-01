@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "func.h"
+#include "menu.h"
 
 int main(){
     int op;
-    first_option(op);
+    imprimir_menu(op);
 
     return 0;
 }

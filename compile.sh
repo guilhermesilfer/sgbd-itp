@@ -1,1 +1,1 @@
-gcc main.c func.c -o main.out
+gcc main.c menu.c -o main.exe
