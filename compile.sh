@@ -1,1 +1,1 @@
-gcc main.c hello.c -o main.out
+gcc main.c func.c -o main.out
