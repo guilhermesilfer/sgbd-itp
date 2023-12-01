@@ -1,1 +1,1 @@
-gcc main.c menu.c -o main.exe
+gcc main.c menu.c -o main

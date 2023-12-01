@@ -1,5 +1,5 @@
 #ifndef DEF
 #define DEF
 
-void imprimir_menu(int);
+void menu(int);
 #endif

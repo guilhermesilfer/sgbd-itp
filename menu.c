@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void imprimir_menu(int op) {
+void menu(int op) {
     printf("\nSelecione um numero de 1 a 7 para prosseguir:\n\n");
     printf("1 - Criar uma tabela\n");
     printf("2 - Listar todas as tabelas\n");

@@ -5,7 +5,7 @@
 
 int main(){
     int op;
-    imprimir_menu(op);
+    menu(op);
 
     return 0;
 }
