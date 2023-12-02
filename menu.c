@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "case1.h"
-#include "case2.h"
-#include "case3.h"
-#include "case4.h"
-#include "case5.h"
-#include "case6.h"
-#include "case7.h"
-
 void menu(int op) {
     printf("\nSelecione um numero de 1 a 7 para prosseguir:\n\n");
     printf("1 - Criar uma tabela\n");
