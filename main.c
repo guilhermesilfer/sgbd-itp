@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "menu.h"
+#include "database.h"
 
 int main(){
 //Menu do SGBD

@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "database.h"
+
 void menu(int op) {
     printf("\nSelecione um numero de 1 a 7 para prosseguir:\n\n");
     printf("1 - Criar uma tabela\n");
@@ -15,6 +17,7 @@ void menu(int op) {
 
     switch (op){
     case 1:
+        criar_tabela();
         break;
 
     case 2:

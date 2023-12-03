@@ -1,1 +1,1 @@
-gcc main.c menu.c -o main
+gcc main.c menu.c database.c -o main
