@@ -3,24 +3,26 @@
 #include <errno.h>
 
 void criar_tabela(){
-    char nome[31];
-    printf("Digite o nome da tabela: \n");
-    fgets(nome, sizeof(nome), stdin);
-
-    nome[strcspn(nome, "\n")] = '\0';
-
-    printf("%s", nome);
+//    char nome[31];
+//    printf("Digite o nome da tabela: \n");
+//    fgets(nome, sizeof(nome), stdin);
+//    nome[strcspn(nome, "\n")] = '\0';
+//    printf("%s", nome);
 
     FILE* tabela;
-    tabela = fopen("example.txt", "w");
-
-    if(tabela == NULL){
-        printf("Error: %s\n", strerror(errno));
+    tabela = fopen("exemplo.txt", "w");
+    if (tabela == NULL) {
+        printf("Error ao abrir o arquivo: %s\n", strerror(errno));
         return;
     }
 
-    fclose(tabela);
-    if(fclose(tabela) != 0) {
+    fprintf(tabela, "testando");
+    int fcloseResult = 1;
+    fcloseResult = fclose(tabela);
+
+    printf("%d\n", fcloseResult);
+
+    if(fcloseResult != 0) {
         printf("Erro ao fechar o arquivo: %s\n", strerror(errno));
     }
     else {
