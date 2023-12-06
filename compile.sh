@@ -1,1 +1,1 @@
-gcc main.c menu.c database.c -o exec
+gcc main.c menu.c minorfunctions.c database.c -o exec

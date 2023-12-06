@@ -1,30 +1,40 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <ctype.h>
+
+#include "minorfunctions.h"
 
 //Caso 1 do menu
 void criar_tabela(){
-    char nome[31];
+    char nome[51];
     nome[0] = '\0';
-
-// define o nome da tabela ----------------------------------
+    char caminho_tabelas[59] = "Tabelas/";
+    char nome_tratado[51];
  
     printf("Digite o nome da tabela: \n");
-
     scanf(" %[^\n]", nome);
 
-    strcat(nome, ".txt");
+    int contador = tratar_nome(nome, nome_tratado);
+    int t_nome = strlen(nome);
+    
+    printf("%s\n", nome); 
+    
+    for(int i = 0; i < t_nome - contador; i++){
+        printf("%c", nome_tratado[i]);
+    }
 
-    printf("%s\n", nome);
+    printf("%d\n", contador);
 
-// define onde o arquivo vai entrar -------------------------
+    strcat(caminho_tabelas, nome_tratado);
+    strcat(caminho_tabelas, ".txt");
 
-    char pathFile[81] = {"tabelas/"};
+    FILE* lista_de_tabelas;
+    lista_de_tabelas = fopen("Tabelas/lista.txt", "a");
+    strcat(nome, "\n");
+    fprintf(lista_de_tabelas, nome);
+    fclose(lista_de_tabelas);
 
-    strcat(pathFile, nome);
-
-// define o arquivo criado ----------------------------------
-  
     FILE* tabela;
     tabela = fopen(pathFile, "w");
 
@@ -37,7 +47,8 @@ void criar_tabela(){
 
     if (fclose(tabela) != 0) {
         printf("Erro ao fechar o arquivo: %s\n", strerror(errno));
-    } else {
+    }
+    else {
         printf("Sucesso ao fechar o arquivo\n");
     }
 }
@@ -48,7 +59,6 @@ void listar_tabelas(){
     lista = fopen("Tabelas/lista.txt", "r");
     
     while (fscanf(lista, "%s") != EOF) {
-        
+
     }
-    
 }
