@@ -6,24 +6,28 @@
 void criar_tabela(){
     char nome[31];
     nome[0] = '\0';
-    char caminho_tabelas[38] = "Tabelas/";
 
+// define o nome da tabela ----------------------------------
+ 
     printf("Digite o nome da tabela: \n");
 
     scanf(" %[^\n]", nome);
 
-    strcat(caminho_tabelas, nome);
-    strcat(caminho_tabelas, ".txt");
+    strcat(nome, ".txt");
 
-    FILE* lista_de_tabelas;
-    lista_de_tabelas = fopen("Tabelas/lista.txt", "a");
-    strcat(nome, "-");
-    fprintf(lista_de_tabelas, nome);
-    fclose(lista_de_tabelas);
+    printf("%s\n", nome);
 
+// define onde o arquivo vai entrar -------------------------
+
+    char pathFile[81] = {"tabelas/"};
+
+    strcat(pathFile, nome);
+
+// define o arquivo criado ----------------------------------
+  
     FILE* tabela;
-    tabela = fopen(caminho_tabelas, "w");
-    
+    tabela = fopen(pathFile, "w");
+
     if (tabela == NULL) {
         printf("Erro ao abrir o arquivo: %s\n", strerror(errno));
         return;
@@ -40,6 +44,11 @@ void criar_tabela(){
 
 //Caso 2 do Menu
 void listar_tabelas(){
-
-
+    FILE* lista;
+    lista = fopen("Tabelas/lista.txt", "r");
+    
+    while (fscanf(lista, "%s") != EOF) {
+        
+    }
+    
 }
