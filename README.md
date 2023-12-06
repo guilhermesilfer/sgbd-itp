@@ -23,5 +23,5 @@ Feito isso, execute o script:
 ### Linux
 
 ```
-./main
+./exec
 ```
