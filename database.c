@@ -2,6 +2,7 @@
 #include <string.h>
 #include <errno.h>
 
+//Caso 1 do menu
 void criar_tabela(){
 //    char nome[31];
 //    printf("Digite o nome da tabela: \n");
@@ -32,6 +33,7 @@ void criar_tabela(){
     return;
 }
 
+//Caso 2 do Menu
 void listar_tabelas(){
 
 
