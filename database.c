@@ -17,8 +17,6 @@ void criar_tabela(){
     strcat(caminho_tabelas, ".txt");
     strcat(caminho_lista, "lista.txt");
 
-    printf("%s\n", nome);
-
     FILE* lista_de_tabelas;
     lista_de_tabelas = fopen(caminho_lista, "a");
     strcat(nome, "-");
