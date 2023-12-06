@@ -4,11 +4,14 @@
 
 //Caso 1 do menu
 void criar_tabela(){
-//    char nome[31];
-//    printf("Digite o nome da tabela: \n");
-//    fgets(nome, sizeof(nome), stdin);
-//    nome[strcspn(nome, "\n")] = '\0';
-//    printf("%s", nome);
+    char nome[31];
+    printf("Digite o nome da tabela: \n");
+    //scanf("%[^\n]s", nome);
+    fgets(nome, 30, stdin);
+    nome[strcspn(nome, "\n")] = '\0';
+    printf("%s", nome);
+
+    strcat(nome, ".txt");
 
     FILE* tabela;
     tabela = fopen("exemplo.txt", "w");
