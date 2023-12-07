@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <ctype.h>
@@ -79,31 +80,50 @@ void apagar_tabela(){
     char nome[51];
     char nome_tratado[51];
     char caminho_tabelas[59] = "Tabelas/";
-    
-    printf("Lista de Tabelas Disponíveis:\n");
-    listar_tabelas();
-
-    printf("Digite apenas o nome da tabela que deseja excluir: \n");
-    scanf(" %[^\n]", nome);
-    tratar_nome(nome, nome_tratado);
+    char Linha[51];
+    char *result;
 
     FILE *lista;
 
-    lista = fopen("Tabelas/lista.txt", "a");
-    if (lista == NULL) {
-        printf("Não existem tabelas a serem exibidas no momento. (%s)\n", strerror(errno));
+    lista = fopen("Tabelas/lista.txt", "r");
+    
+    if(lista == NULL) {
+        printf("Nao existem tabelas a serem exibidas no momento. (%s)\n", strerror(errno));
         return;
+        exit(1);
     }
 
-    char Linha[51];
-    char *result;
-    int i = 1;
     while (!feof(lista)) {
         result = fgets(Linha, 51, lista);
         if(result) {
-            printf("\nTABELA %d: %s", i, Linha);
-            i++;
+             break;
+        }
+        else{
+            printf("Nao existem tabelas a serem exibidas no momento.");
+            exit(2);
         }
     }
-    fclose(lista);
+
+    printf("Lista de Tabelas Disponiveis:\n");
+    listar_tabelas();
+    printf("\nDigite apenas o nome da tabela que deseja excluir: \n");
+    scanf(" %[^\n]", nome);
+    tratar_nome(nome, nome_tratado);
+    strcat(nome_tratado, ".txt");
+    strcat(caminho_tabelas, nome_tratado);
+
+    int i = 0;
+    while (!feof(lista)) {
+        result = fgets(Linha, 51, lista);
+        if(Linha == nome) {
+            i = 1;
+            break;
+        }
+    }
+
+    if(i = 1){
+        remove(Linha);
+        fclose(lista);
+        remove(caminho_tabelas);
+    }
 }
