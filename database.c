@@ -5,7 +5,7 @@
 
 #include "minorfunctions.h"
 
-//Caso 1 do menu
+//Caso 1 do Menu
 void criar_tabela(){
     char nome[51];
     char caminho_tabelas[59] = "Tabelas/";
@@ -48,10 +48,28 @@ void criar_tabela(){
 
 //Caso 2 do Menu
 void listar_tabelas(){
-    FILE* lista;
-    lista = fopen("Tabelas/lista.txt", "r");
-    
-    while (fscanf(lista, "%s") != EOF) {
+    FILE *lista;
 
+    lista = fopen("Tabelas/lista.txt", "r");
+    if (lista == NULL) {
+        printf("Não existem tabelas a serem exibidas no momento. (%s)\n", strerror(errno));
+        return;
     }
+
+    char Linha[51];
+    char *result;
+    int i = 1;
+    while (!feof(lista)) {
+        result = fgets(Linha, 51, lista);
+        if(result) {
+            printf("\nTABELA %d: %s", i, Linha);
+            i++;
+        }
+    }
+    fclose(lista);
+}
+
+//Caso 3 do Menu
+void criar_linha_tabela(){
+    
 }

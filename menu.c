@@ -22,6 +22,7 @@ void menu(int op) {
         break;
 
     case 2:
+        listar_tabelas();
         break;
 
     case 3:
@@ -37,6 +38,9 @@ void menu(int op) {
         break;
         
     case 7:
+        break;
+
+    case 8:
         break;
     
     default: printf("Por favor selecione uma das opcoes validas!");

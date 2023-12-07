@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+//Essa função trata o nome dado pelo usuário para o arquivo da tabela
 void tratar_nome(char *nome, char *nome_tratado){
     int i, j=0;
 
@@ -27,3 +28,5 @@ void tratar_nome(char *nome, char *nome_tratado){
         }
     }
 }
+
+//
