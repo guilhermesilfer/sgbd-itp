@@ -5,7 +5,7 @@
 #include "database.h"
 
 //imprime o menu e captura a ação escolhida
-void menu(int op) {
+int menu(int op) {
     while(true) {
         printf("\nSelecione um numero de 1 a 7 para prosseguir:\n\n");
         printf("1 - Criar uma tabela\n");
