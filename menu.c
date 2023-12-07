@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "database.h"
 
@@ -16,6 +17,7 @@ void menu(int op) {
     
     scanf("%d", &op);
 
+    while(true)
     switch (op){
     case 1:
         criar_tabela();
@@ -41,6 +43,7 @@ void menu(int op) {
         break;
 
     case 8:
+        return 0;
         break;
     
     default: printf("Por favor selecione uma das opcoes validas!");
