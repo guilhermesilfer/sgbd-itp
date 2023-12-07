@@ -73,3 +73,8 @@ void listar_tabelas(){
 void criar_linha_tabela(){
     
 }
+
+//Caso 7 do Menu
+void apagar_tabela(){
+    
+}

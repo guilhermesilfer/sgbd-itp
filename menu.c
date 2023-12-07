@@ -6,50 +6,52 @@
 
 //imprime o menu e captura a ação escolhida
 void menu(int op) {
-    printf("\nSelecione um numero de 1 a 7 para prosseguir:\n\n");
-    printf("1 - Criar uma tabela\n");
-    printf("2 - Listar todas as tabelas\n");
-    printf("3 - Criar uma nova linha na tabela\n");
-    printf("4 - Listar todos os dados de uma tabela\n");
-    printf("5 - Pesquisar valor em uma tabela\n");
-    printf("6 - Apagar uma linha de uma taebla\n");
-    printf("7 - Apagar uma tabela\n");
-    
-    scanf("%d", &op);
-
-    while(true)
-    switch (op){
-    case 1:
-        criar_tabela();
-        break;
-
-    case 2:
-        listar_tabelas();
-        break;
-
-    case 3:
-        break;
-
-    case 4:
-        break;
-
-    case 5:
-        break;
-
-    case 6:
-        break;
+    while(true) {
+        printf("\nSelecione um numero de 1 a 7 para prosseguir:\n\n");
+        printf("1 - Criar uma tabela\n");
+        printf("2 - Listar todas as tabelas\n");
+        printf("3 - Criar uma nova linha na tabela\n");
+        printf("4 - Listar todos os dados de uma tabela\n");
+        printf("5 - Pesquisar valor em uma tabela\n");
+        printf("6 - Apagar uma linha de uma taebla\n");
+        printf("7 - Apagar uma tabela\n");
         
-    case 7:
-        break;
+        scanf("%d", &op);
 
-    case 8:
-        return 0;
-        break;
-    
-    default: printf("Por favor selecione uma das opcoes validas!");
-        exit(1);
-        break;
+        switch (op){
+        case 1:
+            criar_tabela();
+            break;
+
+        case 2:
+            listar_tabelas();
+            break;
+
+        case 3:
+            break;
+
+        case 4:
+            break;
+
+        case 5:
+            break;
+
+        case 6:
+            break;
+            
+        case 7:
+            apagar_tabela();
+            break;
+
+        case 8:
+            printf("Programa Encerrado.");
+            return 0;
+        
+        default:
+            printf("Por favor selecione uma das opcoes validas!");
+            exit(1);
+            break;
+        }
     }
-
-    return;
+    return 0;
 }
