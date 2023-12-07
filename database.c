@@ -8,23 +8,16 @@
 //Caso 1 do menu
 void criar_tabela(){
     char nome[51];
-    nome[0] = '\0';
     char caminho_tabelas[59] = "Tabelas/";
     char nome_tratado[51];
  
     printf("Digite o nome da tabela: \n");
     scanf(" %[^\n]", nome);
 
-    int contador = tratar_nome(nome, nome_tratado);
-    int t_nome = strlen(nome);
+    tratar_nome(nome, nome_tratado);
     
     printf("%s\n", nome); 
-    
-    for(int i = 0; i < t_nome - contador; i++){
-        printf("%c", nome_tratado[i]);
-    }
-
-    printf("%d\n", contador);
+    printf("%s\n", nome_tratado);
 
     strcat(caminho_tabelas, nome_tratado);
     strcat(caminho_tabelas, ".txt");
@@ -36,7 +29,7 @@ void criar_tabela(){
     fclose(lista_de_tabelas);
 
     FILE* tabela;
-    tabela = fopen(pathFile, "w");
+    tabela = fopen(caminho_tabelas, "w");
 
     if (tabela == NULL) {
         printf("Erro ao abrir o arquivo: %s\n", strerror(errno));
