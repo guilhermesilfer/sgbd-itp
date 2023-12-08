@@ -14,7 +14,6 @@ void criar_tabela(){
  
     printf("Digite o nome da tabela: \n");
     scanf(" %[^\n]", nome);
-    printf("%s\n", nome);
 
     if(strlen(nome) > 50) {
         printf("O nome deve ter ate de 50 caracteres");
@@ -67,6 +66,7 @@ void listar_tabelas(){
         result = fgets(Linha, 51, lista);
         if(result) {
             printf("\nTABELA %d: %s", i, Linha);
+            printf("-------------------------\n");
             i++;
         }
     }
@@ -119,13 +119,14 @@ void apagar_tabela(){
     strcat(caminho_tabelas, nome_tratado);
 
     if((remove(caminho_tabelas) == 0)) {
-        /*while(fgets(Linha, 51, lista) != NULL) {      ***Tentando apagar o nome da lista***
+        char nd[2] = "\n";
+        while(fgets(Linha, 51, lista) != NULL) {
             if(Linha == nome){
-                fputs("\n", lista);
+                fputs(nd, lista);
             }
-        }*/
+        }
+        
         fclose(lista);
-
         printf("\nNova Lista de Tabelas:\n");
         listar_tabelas();
         return;
