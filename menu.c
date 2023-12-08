@@ -5,7 +5,7 @@
 #include "database.h"
 
 //imprime o menu e captura a ação escolhida
-void menu(int op) {
+int menu(int op) {
     while(true) {
         printf("\nSelecione um numero de 1 a 7 para prosseguir:\n\n");
         printf("1 - Criar uma tabela\n");
@@ -15,7 +15,7 @@ void menu(int op) {
         printf("5 - Pesquisar valor em uma tabela\n");
         printf("6 - Apagar uma linha de uma taebla\n");
         printf("7 - Apagar uma tabela\n");
-        printf("8 - Sair do programa\n");
+        printf("0 - Sair do programa\n");
         
         scanf("%d", &op);
 
@@ -44,7 +44,7 @@ void menu(int op) {
             apagar_tabela();
             break;
 
-        case 8:
+        case 0:
             printf("Programa Encerrado.");
             return 0;
         
