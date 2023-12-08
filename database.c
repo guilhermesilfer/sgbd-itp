@@ -14,6 +14,12 @@ void criar_tabela(){
  
     printf("Digite o nome da tabela: \n");
     scanf(" %[^\n]", nome);
+    printf("%s\n", nome);
+
+    if(strlen(nome) > 50) {
+        printf("O nome deve ter ate de 50 caracteres");
+        return;
+    }
 
     tratar_nome(nome, nome_tratado);
 
@@ -25,7 +31,7 @@ void criar_tabela(){
     strcat(nome, "\n");
     fprintf(lista_de_tabelas, nome);
     fclose(lista_de_tabelas);
-fscanf
+
     FILE* tabela;
     tabela = fopen(caminho_tabelas, "w");
 
