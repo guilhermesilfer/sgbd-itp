@@ -16,9 +16,6 @@ void criar_tabela(){
     scanf(" %[^\n]", nome);
 
     tratar_nome(nome, nome_tratado);
-    
-    printf("%s\n", nome); 
-    printf("%s\n", nome_tratado);
 
     strcat(caminho_tabelas, nome_tratado);
     strcat(caminho_tabelas, ".txt");
@@ -98,11 +95,14 @@ void apagar_tabela(){
         if(result) {
              break;
         }
-        else{
+        else {
             printf("Nao existem tabelas a serem exibidas no momento.");
             exit(2);
         }
     }
+    fclose(lista);
+
+    lista = fopen("Tabelas/lista.txt", "a");
 
     printf("Lista de Tabelas Disponiveis:\n");
     listar_tabelas();
@@ -112,18 +112,22 @@ void apagar_tabela(){
     strcat(nome_tratado, ".txt");
     strcat(caminho_tabelas, nome_tratado);
 
-    int i = 0;
-    while (!feof(lista)) {
-        result = fgets(Linha, 51, lista);
-        if(Linha == nome) {
-            i = 1;
-            break;
-        }
+    if((remove(caminho_tabelas) == 0)) {
+        /*while(fgets(Linha, 51, lista) != NULL) {      ***Tentando apagar o nome da lista***
+            if(Linha == nome){
+                fputs("\n", lista);
+            }
+        }*/
+        fclose(lista);
+
+        printf("\nNova Lista de Tabelas:\n");
+        listar_tabelas();
+        return;
+    }
+    else{
+        printf("\nEssa tabela nao existe.\n");
+        return;
     }
 
-    if(i = 1){
-        remove(Linha);
-        fclose(lista);
-        remove(caminho_tabelas);
-    }
+    return;
 }
