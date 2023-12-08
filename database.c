@@ -27,7 +27,7 @@ void criar_tabela(){
     strcat(nome, "\n");
     fprintf(lista_de_tabelas, nome);
     fclose(lista_de_tabelas);
-
+fscanf
     FILE* tabela;
     tabela = fopen(caminho_tabelas, "w");
 
