@@ -86,6 +86,7 @@ void apagar_tabela(){
     char Linha[51];
     char *result;
 
+
     FILE *lista;
 
     lista = fopen("Tabelas/lista.txt", "r");
@@ -107,24 +108,46 @@ void apagar_tabela(){
         }
     }
     fclose(lista);
-
-    lista = fopen("Tabelas/lista.txt", "a");
+    lista = fopen("Tabelas/lista.txt", "r");
 
     printf("Lista de Tabelas Disponiveis:\n");
     listar_tabelas();
-    printf("\nDigite apenas o nome da tabela que deseja excluir: \n");
-    scanf(" %[^\n]", nome);
-    tratar_nome(nome, nome_tratado);
+    int i = 1, j;
+    printf("\nDigite o numero da tabela que deseja excluir: \n");
+    scanf("%d", j);
+
+    while (!feof(lista)) {
+        result = fgets(Linha, 51, lista);
+        if(result) {
+            i++;
+        }
+    }
+    printf("%d\n", i);
+    fclose(lista);
+
+    lista = fopen("Tabelas/lista.txt", "a");
+
+    if(j>i || j<1){
+        printf("Essa tabela nao existe!");
+        return;
+    }
+    else{
+        for(i = 0; i<j;i++) {
+        fgets(Linha, 51, lista);
+        }
+        printf("%s", Linha);
+        fclose(lista);
+    }
+
+    
+
+    /*tratar_nome(nome, nome_tratado);
     strcat(nome_tratado, ".txt");
     strcat(caminho_tabelas, nome_tratado);
 
     if((remove(caminho_tabelas) == 0)) {
         char nd[2] = "\n";
-        while(fgets(Linha, 51, lista) != NULL) {
-            if(Linha == nome){
-                fputs(nd, lista);
-            }
-        }
+        
         
         fclose(lista);
         printf("\nNova Lista de Tabelas:\n");
@@ -134,7 +157,7 @@ void apagar_tabela(){
     else{
         printf("\nEssa tabela nao existe.\n");
         return;
-    }
+    }*/
 
     return;
 }
