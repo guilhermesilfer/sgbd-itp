@@ -86,7 +86,6 @@ void apagar_tabela(){
     char Linha[51];
     char *result;
 
-
     FILE *lista;
 
     lista = fopen("Tabelas/lista.txt", "r");
@@ -100,11 +99,11 @@ void apagar_tabela(){
     while (!feof(lista)) {
         result = fgets(Linha, 51, lista);
         if(result) {
-             break;
+            break;
         }
         else {
-            printf("Nao existem tabelas a serem exibidas no momento.");
-            exit(2);
+            printf("Nao existem tabelas a serem exibidas no momento.\n");
+            return;
         }
     }
     fclose(lista);
@@ -131,43 +130,35 @@ void apagar_tabela(){
     }
     else{
         lista = fopen("Tabelas/lista.txt", "r+");
-        fgets(Linha, 51, lista);
-
-        char Line[51];
         char *result;
         int i = 1;
+
+        fgets(nome, 51, lista);
+
         if(j>i){
             while (!feof(lista) && i<j) {
-            result = fgets(Linha, 51, lista);
+            result = fgets(nome, 51, lista);
                 if(result) {
                     i++;
                 }
             }
         }
-        
-        printf("%s", Linha);
-        fclose(lista);
+
+        tratar_nome(nome, nome_tratado);
+        strcat(nome_tratado, ".txt");
+        strcat(caminho_tabelas, nome_tratado);
+
+        if((remove(caminho_tabelas) == 0)) {
+            fclose(lista);
+            printf("\nNova Lista de Tabelas:\n");
+            listar_tabelas();
+            return;
+        }
+        else{
+            printf("\nEssa tabela nao existe.\n");
+            fclose(lista);
+            return;
+        }
     }
-
-    
-
-    /*tratar_nome(nome, nome_tratado);
-    strcat(nome_tratado, ".txt");
-    strcat(caminho_tabelas, nome_tratado);
-
-    if((remove(caminho_tabelas) == 0)) {
-        char nd[2] = "\n";
-        
-        
-        fclose(lista);
-        printf("\nNova Lista de Tabelas:\n");
-        listar_tabelas();
-        return;
-    }
-    else{
-        printf("\nEssa tabela nao existe.\n");
-        return;
-    }*/
-
     return;
 }
