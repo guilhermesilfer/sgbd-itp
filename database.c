@@ -114,7 +114,7 @@ void apagar_tabela(){
     listar_tabelas();
     int i = 1, j;
     printf("\nDigite o numero da tabela que deseja excluir: \n");
-    scanf("%d", j);
+    scanf("%d", &j);
 
     while (!feof(lista)) {
         result = fgets(Linha, 51, lista);
@@ -122,19 +122,29 @@ void apagar_tabela(){
             i++;
         }
     }
-    printf("%d\n", i);
     fclose(lista);
 
-    lista = fopen("Tabelas/lista.txt", "a");
-
+    
     if(j>i || j<1){
         printf("Essa tabela nao existe!");
         return;
     }
     else{
-        for(i = 0; i<j;i++) {
+        lista = fopen("Tabelas/lista.txt", "r+");
         fgets(Linha, 51, lista);
+
+        char Line[51];
+        char *result;
+        int i = 1;
+        if(j>i){
+            while (!feof(lista) && i<j) {
+            result = fgets(Linha, 51, lista);
+                if(result) {
+                    i++;
+                }
+            }
         }
+        
         printf("%s", Linha);
         fclose(lista);
     }
