@@ -64,7 +64,8 @@ void listar_tabelas() {
     int i = 1;
 
     while (!feof(lista)) {
-        fgets(Linha, 50, lista);
+        fgets(Linha, 51, lista);
+        printf("%s\n", Linha);
 
         if(Linha != NULL) {
             printf("\nTABELA %d: %s", i, Linha);
@@ -111,7 +112,6 @@ void apagar_tabela(){
             exit(2);
         }
     }
-
     fclose(lista);
 
     lista = fopen("Tabelas/lista.txt", "a");
