@@ -29,18 +29,18 @@ void criar_tabela() {
     tabela = fopen(caminho_tabelas, "w");
 
     if (tabela == NULL) {
-        printf("Erro ao abrir o arquivo: %s\n", strerror(errno));
+        printf("\nErro ao abrir o arquivo: %s\n", strerror(errno));
         return;
     }
     else {
-        printf("Sucesso ao abrir o arquivo");
+        printf("\nSucesso ao abrir o arquivo");
     }
 
     if (fclose(tabela) != 0) {
-        printf("Erro ao fechar o arquivo: %s\n", strerror(errno));
+        printf("\nErro ao fechar o arquivo: %s\n", strerror(errno));
     }
     else {
-        printf("Sucesso ao fechar o arquivo\n");
+        printf("\nSucesso ao fechar o arquivo\n");
     }
 
     FILE* lista_de_tabelas;
@@ -54,33 +54,45 @@ void criar_tabela() {
 void listar_tabelas() {
     FILE *lista;
     lista = fopen("Tabelas/lista.txt", "r");
-    
     if (lista == NULL) {
         printf("Não existem tabelas a serem exibidas no momento. (%s)\n", strerror(errno));
         return;
     }
-
     char Linha[51];
     int i = 1;
-
+    char *result;
     while (!feof(lista)) {
-        fgets(Linha, 51, lista);
-        printf("%s\n", Linha);
-
-        if(Linha != NULL) {
-            printf("\nTABELA %d: %s", i, Linha);
-            i++;
+        result = fgets(Linha, 51, lista);
+        if(result) {
+            break;
         }
         else {
-            printf("Não existe nenhuma tabela no momento");
+            printf("Nao existem tabelas a serem exibidas no momento.\n");
+            fclose(lista);
+            return;
         }
     }
 
     fclose(lista);
+    lista = fopen("Tabelas/lista.txt", "r");
+    char Linha2[51];
+    i = 1;
+    char *result2;
+
+    while (!feof(lista)) {
+        result2 = fgets(Linha2, 51, lista);
+        if(result2) {
+            printf("\nTABELA %d: %s", i, Linha2);
+            printf("------------------------");
+            i++;
+        }
+    }
+    fclose(lista);
+    return;
 }
 
 //Caso 3 do Menu (Criar uma lista ou registro em uma tabela)
-void criar_linha_tabela(){
+void criar_linha_tabela() {
     
 }
 
@@ -114,58 +126,47 @@ void apagar_tabela(){
     }
     fclose(lista);
 
-    lista = fopen("Tabelas/lista.txt", "a");
+    lista = fopen("Tabelas/lista.txt", "r");
+    FILE* lista_teste = fopen("Tabelas/listateste.txt", "w");
 
     printf("Lista de Tabelas Disponiveis:\n");
     listar_tabelas();
-    int i = 1, j;
-    printf("\nDigite o numero da tabela que deseja excluir: \n");
-    scanf("%d", &j);
+    printf("\nDigite apenas o nome da tabela que deseja excluir: \n");
+    scanf(" %[^\n]", nome);
+    tratar_nome(nome, nome_tratado);
+    strcat(nome, "\n");
 
     while (!feof(lista)) {
         result = fgets(Linha, 51, lista);
         if(result) {
-            i++;
+            if(strcmp(nome, Linha)==0) {
+                strcat(nome_tratado, ".txt");
+                strcat(caminho_tabelas, nome_tratado);
+                remove(caminho_tabelas);
+            }
+            else {
+                fputs(Linha, lista_teste);
+            }
+        }
+    }
+
+    fclose(lista_teste);
+    fclose(lista);
+    lista_teste = fopen("Tabelas/listateste.txt", "r");
+    lista = fopen("Tabelas/lista.txt", "w");
+
+    char Line[51];
+    char *resut;
+    while (!feof(lista_teste)) {
+        resut = fgets(Line, 51, lista_teste);
+        if(resut) {
+            fputs(Line, lista);
         }
     }
     fclose(lista);
-
-    
-    if(j>i || j<1){
-        printf("Essa tabela nao existe!");
-        return;
-    }
-    else{
-        lista = fopen("Tabelas/lista.txt", "r+");
-        char *result;
-        int i = 1;
-
-        fgets(nome, 51, lista);
-
-        if(j>i){
-            while (!feof(lista) && i<j) {
-            result = fgets(nome, 51, lista);
-                if(result) {
-                    i++;
-                }
-            }
-        }
-
-        tratar_nome(nome, nome_tratado);
-        strcat(nome_tratado, ".txt");
-        strcat(caminho_tabelas, nome_tratado);
-
-        if((remove(caminho_tabelas) == 0)) {
-            fclose(lista);
-            printf("\nNova Lista de Tabelas:\n");
-            listar_tabelas();
-            return;
-        }
-        else{
-            printf("\nEssa tabela nao existe.\n");
-            fclose(lista);
-            return;
-        }
-    }
+    fclose(lista_teste);
+    remove("Tabelas/listateste.txt");
+    printf("\nNova Lista de Tabelas:\n");
+    listar_tabelas();
     return;
 }
