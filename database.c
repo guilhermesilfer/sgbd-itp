@@ -136,6 +136,7 @@ void apagar_tabela(){
     tratar_nome(nome, nome_tratado);
     strcat(nome, "\n");
 
+    int i = 1;
     while (!feof(lista)) {
         result = fgets(Linha, 51, lista);
         if(result) {
@@ -143,14 +144,15 @@ void apagar_tabela(){
                 strcat(nome_tratado, ".txt");
                 strcat(caminho_tabelas, nome_tratado);
                 remove(caminho_tabelas);
+                i = 0;
             }
             else {
                 fputs(Linha, lista_teste);
             }
         }
     }
-
-    fclose(lista_teste);
+    if(i == 0) {
+        fclose(lista_teste);
     fclose(lista);
     lista_teste = fopen("Tabelas/listateste.txt", "r");
     lista = fopen("Tabelas/lista.txt", "w");
@@ -169,4 +171,11 @@ void apagar_tabela(){
     printf("\nNova Lista de Tabelas:\n");
     listar_tabelas();
     return;
+    }
+    else {
+        fclose(lista);
+        fclose(lista_teste);
+        printf("Essa tabela nao existe!\n");
+        return;
+    }
 }
