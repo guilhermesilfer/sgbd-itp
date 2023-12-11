@@ -13,7 +13,7 @@ void criar_tabela() {
     char caminho_tabelas[59] = "Tabelas/";
  
     printf("Digite o nome da tabela: \n");
-    scanf(" %[^\n]", nome);
+    scanf(" %[^\n]", &nome);
 
     if(strlen(nome) > 50) {
         printf("O nome deve ter ate de 50 caracteres");
@@ -33,7 +33,13 @@ void criar_tabela() {
         return;
     }
     else {
-        printf("\nSucesso ao abrir o arquivo");
+        printf("\nSucesso ao abrir o arquivo\n");
+        char chavep[21];
+        printf("\nDigite o nome da Chave Primaria da tabela %s:\n", nome);
+        scanf(" %[^\n]", chavep);
+        //strcat(chavep, " | ");
+        fputs(chavep, tabela);
+        fputs("\n", tabela);
     }
 
     if (fclose(tabela) != 0) {
@@ -48,6 +54,8 @@ void criar_tabela() {
     strcat(nome, "\n");
     fprintf(lista_de_tabelas, nome);
     fclose(lista_de_tabelas);
+
+    return;
 }
 
 //Caso 2 do Menu (Listar todas as tabelas)
@@ -93,6 +101,55 @@ void listar_tabelas() {
 
 //Caso 3 do Menu (Criar uma lista ou registro em uma tabela)
 void criar_linha_tabela() {
+    char nome[51];
+    char nome_tratado[51];
+    char caminho_tabelas[59] = "Tabelas/";
+    char *result;
+    char Linha[51];
+
+    printf("Lista de tabelas disponiveis:\n");
+    listar_tabelas();
+    printf("\nDigite o nome da tabela em que deseja criar uma nova linha: \n");
+    scanf(" %[^\n]", &nome);
+    if(strlen(nome) > 50) {
+        printf("O nome deve ter ate de 50 caracteres");
+        return;
+    }
+    tratar_nome(nome, nome_tratado);
+    strcat(caminho_tabelas, nome_tratado);
+    strcat(caminho_tabelas, ".txt");
+
+    FILE* tabela = fopen(caminho_tabelas, "r+");
+    if (tabela == NULL) {
+        printf("\nErro ao abrir o arquivo: %s\n", strerror(errno));
+        return;
+    }
+    if(tabela){
+        char line[51];
+        char dado[5];
+        fgets(line, 51, tabela);
+    while(!feof(tabela)){
+        result = fgets(Linha, 51, tabela);
+        if(!result){
+            printf("\nDigite: %s", line);
+            scanf(" %[^\n]", &dado);
+            strcat(dado, "\n");
+            fputs(dado, tabela);
+            fclose(tabela);
+            break;
+        }
+    }
+    return;
+    }
+    else{
+        printf("Essa tabela nao existe!\n");
+        return;
+    }
+    
+}
+
+//Caso 4 Listar todos os dados de uma tabela
+void listar_dados_tabela(){
     
 }
 
@@ -153,24 +210,24 @@ void apagar_tabela(){
     }
     if(i == 0) {
         fclose(lista_teste);
-    fclose(lista);
-    lista_teste = fopen("Tabelas/listateste.txt", "r");
-    lista = fopen("Tabelas/lista.txt", "w");
+        fclose(lista);
+        lista_teste = fopen("Tabelas/listateste.txt", "r");
+        lista = fopen("Tabelas/lista.txt", "w");
 
-    char Line[51];
-    char *resut;
-    while (!feof(lista_teste)) {
-        resut = fgets(Line, 51, lista_teste);
-        if(resut) {
-            fputs(Line, lista);
+        char Line[51];
+        char *resut;
+        while (!feof(lista_teste)) {
+            resut = fgets(Line, 51, lista_teste);
+            if(resut) {
+                fputs(Line, lista);
+            }
         }
-    }
-    fclose(lista);
-    fclose(lista_teste);
-    remove("Tabelas/listateste.txt");
-    printf("\nNova Lista de Tabelas:\n");
-    listar_tabelas();
-    return;
+        fclose(lista);
+        fclose(lista_teste);
+        remove("Tabelas/listateste.txt");
+        printf("\nNova Lista de Tabelas:\n");
+        listar_tabelas();
+        return;
     }
     else {
         fclose(lista);

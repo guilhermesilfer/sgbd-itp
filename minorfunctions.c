@@ -28,10 +28,3 @@ void tratar_nome(char *nome, char *nome_tratado){
         }
     }
 }
-
-/*
-void excluir_tb_lista(){
-    FILE* arquivooriginal = fopen("Tabelas/tabela.txt", "rb");
-    FILE* arquivomodificado = fopen("Tabelas/tabelastemp.txt", "ab");
-    char nome
-}*/
