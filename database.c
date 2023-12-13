@@ -16,7 +16,7 @@ void criar_tabela() {
     scanf(" %[^\n]", nome);
 
     if(strlen(nome) > 50) {
-        printf("O nome deve ter ate de 50 caracteres");
+        printf("O nome deve ter ate 50 caracteres");
         return;
     }
 
@@ -60,15 +60,15 @@ void listar_tabelas() {
         return;
     }
 
-    char Linha[51];
+    char line[51];
     int i = 1;
 
     while (!feof(lista)) {
-        fgets(Linha, 51, lista);
-        printf("%s\n", Linha);
+        fgets(line, 51, lista);
+        printf("%s\n", line);
 
-        if(Linha != NULL) {
-            printf("\nTABELA %d: %s", i, Linha);
+        if(line != NULL) {
+            printf("\nTABELA %d: %s", i, line);
             i++;
         }
         else {
@@ -89,7 +89,7 @@ void apagar_tabela(){
     char nome[51];
     char nome_tratado[51];
     char caminho_tabelas[59] = "Tabelas/";
-    char Linha[51];
+    char line[51];
     char *result;
 
     FILE *lista;
@@ -103,7 +103,7 @@ void apagar_tabela(){
     }
 
     while (!feof(lista)) {
-        result = fgets(Linha, 51, lista);
+        result = fgets(line, 51, lista);
         if(result) {
             break;
         }
@@ -123,7 +123,7 @@ void apagar_tabela(){
     scanf("%d", &j);
 
     while (!feof(lista)) {
-        result = fgets(Linha, 51, lista);
+        result = fgets(line, 51, lista);
         if(result) {
             i++;
         }
