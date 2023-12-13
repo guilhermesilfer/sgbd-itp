@@ -29,6 +29,7 @@ int menu(int op) {
             break;
 
         case 3:
+            criar_linha_tabela();
             break;
 
         case 4:
