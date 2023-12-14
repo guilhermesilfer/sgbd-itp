@@ -3,17 +3,18 @@
 #include <string.h>
 #include <errno.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 #include "minorfunctions.h"
 
-//Caso 1 do Menu (Criar uma tabela)
+//Cria uma tabela e insere informações
 void criar_tabela() {
     char nome[51];
     char nome_tratado[51];
     char caminho_tabelas[59] = "Tabelas/";
  
     printf("Digite o nome da tabela: \n");
-    scanf(" %[^\n]", &nome);
+    scanf("%[^\n]", nome);
 
     if(strlen(nome) > 50) {
         printf("O nome deve ter ate 50 caracteres");
@@ -33,11 +34,23 @@ void criar_tabela() {
         return;
     }
     else {
-        printf("\nSucesso ao abrir o arquivo\n");
+        printf("\nSucesso ao abrir o arquivo\n\n");
         char chavep[21];
-        printf("\nDigite o nome da Chave Primaria da tabela %s:\n", nome);
-        scanf(" %[^\n]", chavep);
-        //strcat(chavep, " | ");
+        int cols = 1;
+        int stop = false;
+        printf("Quantas colunas existirao na tabela?\n");
+        scanf("%d\n", &cols);
+        printf("%d\n", cols);
+        for(int i = 0; i < cols; i++) {
+            printf("Qual o nome da coluna que sera a chave primaria:\n");
+            while(stop == false) {
+                scanf("%[^\n]", chavep);
+                if(chavep != '\0') {
+                    stop = true;
+                }
+            }
+            printf("chegou aqui\n");
+        }
         fputs(chavep, tabela);
         fputs("\n", tabela);
     }
@@ -58,7 +71,7 @@ void criar_tabela() {
     return;
 }
 
-//Caso 2 do Menu (Listar todas as tabelas)
+//Lista todas as tabelas existentes
 void listar_tabelas() {
     FILE *lista;
     lista = fopen("Tabelas/lista.txt", "r");
@@ -100,7 +113,7 @@ void listar_tabelas() {
     return;
 }
 
-//Caso 3 do Menu (Criar uma lista ou registro em uma tabela)
+//Cria um registro/linha na tabela escolhida
 void criar_linha_tabela() {
     char nome[51];
     char nome_tratado[51];
@@ -149,12 +162,12 @@ void criar_linha_tabela() {
     
 }
 
-//Caso 4 Listar todos os dados de uma tabela
+//Lista todos os dados de uma tabela
 void listar_dados_tabela(){
     
 }
 
-//Caso 7 do Menu (Apagar uma tabela)
+//Apagar uma tabela
 void apagar_tabela(){
     char nome[51];
     char nome_tratado[51];
