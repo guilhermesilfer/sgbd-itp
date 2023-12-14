@@ -164,7 +164,36 @@ void criar_linha_tabela() {
 
 //Lista todos os dados de uma tabela
 void listar_dados_tabela(){
-    
+    char nome[51];
+    char nome_tratado[51];
+    char caminho_tabelas[59] = "Tabelas/";
+    char *result;
+    char line[51];
+
+    printf("Digite o nome da tabela que deseja ver:\n");
+    scanf(" %[^\n]", &nome);
+    tratar_nome(nome, nome_tratado);
+    strcat(nome_tratado, ".txt");
+    strcat(caminho_tabelas, nome_tratado);
+
+    FILE* tabela = fopen(caminho_tabelas, "r");
+
+    if(tabela) {
+        result = fgets(line, 51, tabela);
+        printf("%s", line);
+        fgets(line, 51, tabela);
+        while(!feof(tabela)){
+            result = fgets(line, 51, tabela);
+            if(result){
+                printf("%s", line);
+            }
+        }
+        return;
+    }
+    else{
+        printf("Essa tabela não existe!\n%s", strerror(errno));
+        return;
+    }
 }
 
 //Apagar uma tabela
