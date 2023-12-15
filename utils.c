@@ -27,6 +27,8 @@ int count_cols(char* filepath) {
     cols++;
     printf("A tabela %s tem %d colunas\n", filepath, cols);
 
+    fclose(Table);
+    
     return cols;
 }
 
@@ -44,7 +46,6 @@ void print_table(char* filepath, int cols) {
         remove_newline_from_string(buffer);
         char* token = strtok(buffer, ",\n");
         while(token != NULL) {
-            //segunda linha esta acima da coluna e abaixo da coluna * 2
 
             //Alinhamento
             int token_size = strlen(token);
