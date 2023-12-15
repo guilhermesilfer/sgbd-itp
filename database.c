@@ -15,7 +15,9 @@ void criar_tabela() {
     
     //Pega o nome da tabela
     printf("Digite o nome da tabela:\n");
-    scanf("%50[^\n]", table_name);
+    fflush(stdin);
+    scanf("%[^\n]s", table_name);
+    printf("%s", table_name);
 
     //Trata table_name em filename criando o nome do arquivo
     tratar_nome(table_name, filename); //TODO use english names only!
@@ -24,14 +26,14 @@ void criar_tabela() {
     printf(" csv: %s |", filename);
     printf(" filepath: %s\n\n", filepath);
 
-    //Início da criação do arquivo da tabela
+    //Iníc1 da criação do arquivo da tabela
     FILE* Table;
-    Table = fopen(filepath, "w+");
+    Table = fopen(filepath, "w");
 
     //Checagem da abertura do arquivo
     if(Table == NULL) {
         printf("Erro na criacao do arquivo\n\n");
-        return -1;
+        return;
     }
     else {
         printf("Sucesso na criacao do arquivo\n\n");
@@ -54,22 +56,63 @@ void criar_tabela() {
         fprintf(Table, "%s", col_name);
         (i == cols - 1) ? fprintf(Table, "\n") : fprintf(Table, ",");
     }
+    
+    if(fclose(Table) != 0) {
+        printf("Erro ao fechar o arquivo\n");
+        return;
+    }
+    else {
+        printf("Sucesso ao fechar o arquivo\n");
+    }
 
+    Table = fopen(filepath, "r");
+
+    if(Table == NULL) {
+        printf("Erro na criacao do arquivo\n\n");
+        return;
+    }
+    else {
+        printf("Sucesso na criacao do arquivo\n\n");
+    }
+    
     //Escreve os tipos das colunas
+    printf("======== Digite para cada coluna o numero do seu respectivo tipo: ========\n");
     for(int i = 0; i < cols; i++) {
-        printf("Digite para cada coluna o numero do seu respectivo tipo:\n");
-        print_table(1);
-
+        char buffer[100];
+        fgets(buffer, 100, Table);
+        remove_newline_from_string(buffer);
+        char* token = strtok(buffer, ",\n");
+        printf("Buffer: %s\nToken: %s\n", buffer, token);
+        while(token != NULL) {
+            int num = 0;
+            printf("Digite o numero do tipo dessa coluna: %s\n", token);
+            printf("1 - char | 2 - int | 3 - float | 4 - double\n");
+            while(num != 1 && num != 2 && num != 3 && num != 4) {
+                scanf("%d", num);
+                if(num != 1 && num != 2 && num != 3 && num != 4) {
+                    printf("Digite um numero que corresponda ao tipo\n");
+                    num = 0;
+                }
+                else {
+                    fprintf(Table, "%d,", num);
+                }
+            }
+            token = strtok(NULL, ",\n"); //must be the last command of this while()
+            if (token == NULL) {
+                printf("\n");
+                break;
+            }
+        }
     }
 
     if(fclose(Table) != 0) {
         printf("Erro ao fechar o arquivo\n");
-        return -1;
+        return;
     }
     else {
         printf("Sucesso ao fechar o arquivo\n");
-        return 0;
     }
+
     //Fim da criação do arquivo da tabela
 
     FILE* lista_de_tabelas;
@@ -210,75 +253,75 @@ void listar_dados_tabela(){
 
 
 //Apagar linha em uma tabela
-void apagar_linha(){
-    char nome[51];
-    char nome_tratado[51];
-    char caminho_tabelas[59] = "Tabelas/";
-    
-    printf("Tabelas diponiveis:\n");
-    listar_tabelas();
-    printf("Digite o nome da tabela em que deseja excluir um registro:\n");
-    scanf(" %[^\n]", &nome);
-    tratar_nome(nome, nome_tratado);
-    strcat(nome_tratado, ".txt");
-    strcat(caminho_tabelas, nome_tratado);
-    
-    FILE* tabela = fopen(caminho_tabelas, "r");
-
-    if(tabela){
-        FILE* tabelarecebe = fopen("Tabelas/tabelarecebe.txt", "w");
-        char line[1000];
-        char *result;
-        while(!feof(tabela)){
-            result = fgets(line, 1000, tabela);
-            if(result) fputs(line, tabelarecebe);
-        }
-        fclose(tabelarecebe);
-        fclose(tabela);
-
-        tabela = fopen(caminho_tabelas, "r");
-        tabelarecebe = fopen("Tabelas/tabelarecebe.txt", "r");
-        FILE* tabelateste = fopen("Tabelas/tabelateste.txt", "w");
-
-        char line[1000] = "";
-        char *result2;
-        char line2[1000] = "";
-        char linha[1000];
-        char chavep[] = "";
-        printf("Digite a chave primaria da linha que deseja excluir:\n");
-        scanf(" %[^\n]", &chavep);
-
-        while(!feof(tabela)){
-            result = fgets(line, strlen(chavep), tabela);
-            if(result && line != chavep){
-                result2 = fgets(line2, 1000, tabelarecebe);
-                fputs(line2, tabelateste);
-            }
-            fgets(linha, 1000, tabela);
-        }
-        fclose(tabela);
-        fclose(tabelarecebe);
-        fclose(tabelateste);
-        remove(tabelarecebe);
-        tabela = fopen(caminho_tabelas, "w");
-        tabelateste = fopen("Tabelas/tabelateste.txt", "r");
-
-        char line[1000] = "";
-        char *result3;
-        while(!feof(tabelateste)){
-            result3 = fgets(line, 1000, tabelateste);
-            if(result3) fputs(line, tabela);
-        }
-        fclose(tabela);
-        fclose(tabelateste);
-        remove(tabelateste);
-        return;
-    }
-    else{
-        printf("Essa tabela não existe!\n%s",strerror(errno));
-        return;
-    }
-}
+//void apagar_linha(){
+//    char nome[51];
+//    char nome_tratado[51];
+//    char caminho_tabelas[59] = "Tabelas/";
+//    
+//    printf("Tabelas diponiveis:\n");
+//    listar_tabelas();
+//    printf("Digite o nome da tabela em que deseja excluir um registro:\n");
+//    scanf(" %[^\n]", &nome);
+//    tratar_nome(nome, nome_tratado);
+//    strcat(nome_tratado, ".txt");
+//    strcat(caminho_tabelas, nome_tratado);
+//    
+//    FILE* tabela = fopen(caminho_tabelas, "r");
+//
+//    if(tabela){
+//        FILE* tabelarecebe = fopen("Tabelas/tabelarecebe.txt", "w");
+//        char line[1000];
+//        char *result;
+//        while(!feof(tabela)){
+//            result = fgets(line, 1000, tabela);
+//            if(result) fputs(line, tabelarecebe);
+//        }
+//        fclose(tabelarecebe);
+//        fclose(tabela);
+//
+//        tabela = fopen(caminho_tabelas, "r");
+//        tabelarecebe = fopen("Tabelas/tabelarecebe.txt", "r");
+//        FILE* tabelateste = fopen("Tabelas/tabelateste.txt", "w");
+//
+//        char line[1000] = "";
+//        char *result2;
+//        char line2[1000] = "";
+//        char linha[1000];
+//        char chavep[] = "";
+//        printf("Digite a chave primaria da linha que deseja excluir:\n");
+//        scanf(" %[^\n]", &chavep);
+//
+//        while(!feof(tabela)){
+//            result = fgets(line, strlen(chavep), tabela);
+//            if(result && line != chavep){
+//                result2 = fgets(line2, 1000, tabelarecebe);
+//                fputs(line2, tabelateste);
+//            }
+//            fgets(linha, 1000, tabela);
+//        }
+//        fclose(tabela);
+//        fclose(tabelarecebe);
+//        fclose(tabelateste);
+//        remove(tabelarecebe);
+//        tabela = fopen(caminho_tabelas, "w");
+//        tabelateste = fopen("Tabelas/tabelateste.txt", "r");
+//
+//        char line[1000] = "";
+//        char *result3;
+//        while(!feof(tabelateste)){
+//            result3 = fgets(line, 1000, tabelateste);
+//            if(result3) fputs(line, tabela);
+//        }
+//        fclose(tabela);
+//        fclose(tabelateste);
+//        remove(tabelateste);
+//        return;
+//    }
+//    else{
+//        printf("Essa tabela não existe!\n%s",strerror(errno));
+//        return;
+//    }
+//}
 
 //Apagar uma tabela
 void apagar_tabela(){

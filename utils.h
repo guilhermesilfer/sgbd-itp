@@ -1,10 +1,14 @@
 #ifndef DEF
 #define DEF
 
-void print_table();
+void remove_newline_from_string(char* str);
+
+void select_type(FILE* Table);
+
+void print_table(int num, int cols);
+
+char find_type(int num);
 
 int tratar_nome();
-
-void excluir_tb_lista();
 
 #endif

@@ -1,20 +1,22 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-void remove_newline(char* str) {
+void remove_newline_from_string(char* str) {
     if (str[strlen(str) - 1] =='\n') {
         str[strlen(str) - 1] = '\0';
     }
 }
+
 //Imprime a tabela
-void print_table(int num) {
+void print_table(int num, int cols) {
     FILE* Table = fopen("tabelas/tabela.csv", "r");
     char buffer[1000];
 
     if(num == 0) {
         while(fgets(buffer, 1000, Table)) {
-            remove_newline(buffer);
+            remove_newline_from_string(buffer);
             char* token = strtok(buffer, ",\n");
 
             while(token != NULL) {
@@ -26,21 +28,37 @@ void print_table(int num) {
         }
     }
     else if(num == 1) {
-        while(fgets(buffer, 1000, Table)) {
-            remove_newline(buffer);
-            char* token = strtok(buffer, ",\n");
-
-            while(token != NULL) {
-                printf("Qual o tipo dessa coluna?: %s\n", token);
-                scanf("%d", num);
-                fprinf();
-                token = strtok(NULL, ",\n"); //must be the last command of this while()
-                if (token == NULL) printf("\n");
-            }
-        }
     }
 
     fclose(Table);
+}
+
+//Usuário seleciona o tipo da coluna
+void select_type(FILE* Table) {
+    char buffer[1000];
+    int num = 0;
+    while(fgets(buffer, 1000, Table)) {
+        remove_newline_from_string(buffer);
+        char* token = strtok(buffer, ",\n");
+        printf("Buffer: %s\nToken: %s\n", buffer, token);
+        while(token != NULL) {
+            printf("entrou\n");
+            printf("Qual o tipo dessa coluna?: %s\n", token);
+            printf("1 - char\n2 - int\n3 - float\n4 - double\n");
+            while(num != 1 || num != 2 || num != 3 || num != 4) {
+                scanf("%d", num);
+                if(num != 1 && num != 2 && num != 3 && num != 4)
+                    printf("Digite um numero que corresponda ao tipo\n");
+            }
+            fprintf(Table, "%d,", num);
+            token = strtok(NULL, ",\n"); //must be the last command of this while()
+            if (token == NULL) printf("\n");
+        }
+    }
+}
+
+char find_type(int num) {
+
 }
 
 //Essa função trata o nome dado pelo usuário para o arquivo da tabela
