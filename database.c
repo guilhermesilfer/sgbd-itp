@@ -211,9 +211,8 @@ void listar_dados_tabela(){
     FILE* tabela = fopen(filepath, "r");
     if(tabela){
         fclose(tabela);
-        int *cols;
-        count_cols(filepath, &cols);
-        printf("%d", cols);
+        int cols;
+        cols = count_cols(filepath, cols);
         print_table(filepath, cols);
     }
     /*FILE* tabela = fopen(caminho_tabelas, "r");
