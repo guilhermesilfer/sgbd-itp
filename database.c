@@ -107,7 +107,7 @@ void criar_tabela() {
 //Lista todas as tabelas existentes
 void listar_tabelas() {
     FILE *lista;
-    lista = fopen("Tabelas/lista.txt", "r");
+    lista = fopen("tabelas/lista.txt", "r");
     if (lista == NULL) {
         printf("Não existem tabelas a serem exibidas no momento. (%s)\n", strerror(errno));
         return;
@@ -197,19 +197,26 @@ void criar_linha_tabela() {
 
 //Lista todos os dados de uma tabela
 void listar_dados_tabela(){
-    char nome[51];
-    char nome_tratado[51];
-    char caminho_tabelas[59] = "Tabelas/";
-    char *result;
-    char line[51];
+    char table_name[51];
+    char filename[51];
+    char filepath[59] = "tabelas/";
+    //char *result;
+    //char line[51];
 
     printf("Digite o nome da tabela que deseja ver:\n");
-    scanf(" %[^\n]", &nome);
-    tratar_nome(nome, nome_tratado);
-    strcat(nome_tratado, ".txt");
-    strcat(caminho_tabelas, nome_tratado);
+    scanf(" %[^\n]", &table_name);
+    tratar_nome(table_name, filename);
+    strcat(filepath, filename);
 
-    FILE* tabela = fopen(caminho_tabelas, "r");
+    FILE* tabela = fopen(filepath, "r");
+    if(tabela){
+        fclose(tabela);
+        int *cols;
+        count_cols(filepath, &cols);
+        printf("%d", cols);
+        print_table(filepath, cols);
+    }
+    /*FILE* tabela = fopen(caminho_tabelas, "r");
 
     if(tabela) {
         result = fgets(line, 51, tabela);
@@ -226,14 +233,14 @@ void listar_dados_tabela(){
     else{
         printf("Essa tabela não existe!\n%s", strerror(errno));
         return;
-    }
+    }*/
 }
 
 //Pesquisar valor em uma tabela
 void pesquisar_valor(){
     char table_name[51];
     char filename[51];
-    char filepath[59] = "Tabelas/";
+    char filepath[59] = "tabelas/";
 
     printf("Digite o nome da tabela em que deseja procurar um valor:\n");
     scanf("%s", &table_name);
@@ -385,7 +392,7 @@ void apagar_tabela(){
     lista = fopen("tabelas/lista.txt", "r");
     FILE* lista_teste = fopen("tabelas/listateste.txt", "w");
 
-    printf("Lista de Tabelas Disponiveis:\n");
+    printf("Lista de tabelas Disponiveis:\n");
     listar_tabelas();
     printf("\nDigite apenas o nome da tabela que deseja excluir: \n");
     scanf(" %[^\n]", nome);
