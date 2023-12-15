@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 void remove_newline_from_string(char* str) {
     if (str[strlen(str) - 1] =='\n') {
@@ -10,24 +11,40 @@ void remove_newline_from_string(char* str) {
 }
 
 //Imprime a tabela
-void print_table(int num, int cols) {
-    FILE* Table = fopen("tabelas/tabela.csv", "r");
+void print_table(char* filepath, int cols) {
+    FILE* Table = fopen(filepath, "r");
     char buffer[1000];
+    int count = 0;
+    int second_line_detect = 1;
+    int ok = true;
 
-    if(num == 0) {
-        while(fgets(buffer, 1000, Table)) {
-            remove_newline_from_string(buffer);
-            char* token = strtok(buffer, ",\n");
+    printf("\n");
 
-            while(token != NULL) {
+    while(fgets(buffer, 1000, Table)) {
+        remove_newline_from_string(buffer);
+        char* token = strtok(buffer, ",\n");
+        while(token != NULL) {
+            //segunda linha esta acima da coluna e abaixo da coluna * 2
+
+            //Alinhamento
+            int token_size = strlen(token);
+            int space_amount = 15 - token_size;
+            
+            if(second_line_detect <= cols || second_line_detect > cols*2) {
                 printf("%s", token);
-                token = strtok(NULL, ",\n"); //must be the last command of this while()
-                if (token == NULL) printf("\n");
-                else printf(" | ");
+                for(int i = 0; i < space_amount; i++) printf(" ");
+                printf("|");
             }
+            else if(ok == true) {
+                for(int j = 0; j < cols; j++) printf("----------------");
+                printf("\n");
+                ok = false;
+            }
+            second_line_detect++;
+
+            token = strtok(NULL, ",\n"); //must be the last command of this while()
+            if (token == NULL) printf("\n");
         }
-    }
-    else if(num == 1) {
     }
 
     fclose(Table);

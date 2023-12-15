@@ -31,7 +31,7 @@ void criar_tabela() {
     printf("Quantas colunas existirao na tabela:\n");
     scanf("%d", &cols);
 
-    char col_names[cols][21];
+    char col_names[cols][15];
     int col_types[cols];
 
     //Leitura das colunas
@@ -94,12 +94,14 @@ void criar_tabela() {
 
     //Abertura da lista de tabelas
     FILE* lista_de_tabelas;
-    lista_de_tabelas = fopen("Tabelas/lista.txt", "a");
+    lista_de_tabelas = fopen("tabelas/lista.txt", "a");
     strcat(table_name, "\n");
     fprintf(lista_de_tabelas, table_name);
 
     //Fechamento da lista de tabelas
     fclose(lista_de_tabelas);
+
+    print_table(filepath, cols);
 
     return;
 }
@@ -150,7 +152,7 @@ void listar_tabelas() {
 void criar_linha_tabela() {
     char nome[51];
     char nome_tratado[51];
-    char caminho_tabelas[59] = "Tabelas/";
+    char caminho_tabelas[59] = "tabelas/";
     char *result;
     char line[51];
 
@@ -368,7 +370,6 @@ void apagar_tabela(){
     if(lista == NULL) {
         printf("Nao existem tabelas a serem exibidas no momento. (%s)\n", strerror(errno));
         return;
-        exit(1);
     }
 
     while (!feof(lista)) {
