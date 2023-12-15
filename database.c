@@ -230,6 +230,56 @@ void listar_dados_tabela(){
 }
 
 //Pesquisar valor em uma tabela
+void pesquisar_valor(){
+    char table_name[51];
+    char filename[51];
+    char filepath[59] = "Tabelas/";
+
+    printf("Digite o nome da tabela em que deseja procurar um valor:\n");
+    scanf("%s", &table_name);
+    tratar_nome(table_name, filename);
+    strcat(filepath, filename);
+
+    FILE* Table = fopen(filepath, "r");
+    if(Table){
+        int tipo;
+        /*char line[1000];
+        while(fgets(line, 1000, Table)) {
+            printf("%s", line);
+        }
+        fclose(Table);
+        Table;*/
+        printf("\nDigite o tipo do dado que deseja pesquisar\n");
+        printf("[1] -> char\n[2] -> int\n[3] -> float\n[4] -> double\n");
+        scanf("%d", &tipo);
+
+        switch (tipo) {
+        case 1:
+
+            break;
+        
+        case 2:
+
+            break;
+
+        case 3:
+
+            break;
+
+        case 4:
+
+            break;
+
+        default:
+            printf("Essa opcao nao existe!");
+            return;
+        }
+    }
+    else{
+        printf("Essa tabela nao existe! %s\n", strerror(errno));
+        return;
+    }
+}
 
 
 //Apagar linha em uma tabela
