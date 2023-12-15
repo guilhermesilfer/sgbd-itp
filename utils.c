@@ -10,6 +10,26 @@ void remove_newline_from_string(char* str) {
     }
 }
 
+int count_cols(char* filepath) {
+    FILE* Table = fopen(filepath, "r");
+    if(Table == NULL) printf("in count_cols: Erro ao abrir o arquivo");
+    char first_line[100] = "";
+    fgets(first_line, 100, Table);
+    
+    int cols = 0;
+    for(int i = 0; i < strlen(first_line); i++) {
+        if(first_line[0] == '\0') return cols;
+        if(first_line[i] == ',') {
+            printf("%c = %c\n", first_line[i], ',');
+            cols++;
+        }
+    }
+    cols++;
+    printf("A tabela %s tem %d colunas\n", filepath, cols);
+
+    return cols;
+}
+
 //Imprime a tabela
 void print_table(char* filepath, int cols) {
     FILE* Table = fopen(filepath, "r");
@@ -42,7 +62,7 @@ void print_table(char* filepath, int cols) {
             }
             second_line_detect++;
 
-            token = strtok(NULL, ",\n"); //must be the last command of this while()
+            token = strtok(NULL, ",\n");
             if (token == NULL) printf("\n");
         }
     }

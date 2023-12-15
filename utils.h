@@ -5,6 +5,8 @@ void remove_newline_from_string(char* str);
 
 void select_type(FILE* Table);
 
+void count_cols(char* filepath);
+
 void print_table(char* filepath, int cols);
 
 char find_type(int num);

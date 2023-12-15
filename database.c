@@ -101,8 +101,6 @@ void criar_tabela() {
     //Fechamento da lista de tabelas
     fclose(lista_de_tabelas);
 
-    print_table(filepath, cols);
-
     return;
 }
 
