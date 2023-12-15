@@ -2,6 +2,22 @@
 #include <stdio.h>
 #include <string.h>
 
+//Imprime a tabela
+void print_table(char* filepath, int cols) {
+    FILE* Table = fopen(filepath, "r");
+
+    char line[1000];
+
+    fgets(line, sizeof(line), Table);
+    printf("%s\n", line);
+
+    while(fgets(line, sizeof(line), Table)) {
+        printf("%s\n", line);
+    }
+
+    fclose(Table);
+}
+
 //Essa função trata o nome dado pelo usuário para o arquivo da tabela
 void tratar_nome(char *nome, char *nome_tratado){
     int i, j=0;
@@ -27,4 +43,5 @@ void tratar_nome(char *nome, char *nome_tratado){
             nome_tratado[i] = (nome_tratado[i] + 32);
         }
     }
+    strcat(nome_tratado, ".csv");
 }

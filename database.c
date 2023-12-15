@@ -14,7 +14,7 @@ void criar_tabela() {
     char caminho_tabelas[59] = "Tabelas/";
  
     printf("Digite o nome da tabela: \n");
-    scanf("%[^\n]", nome);
+    scanf("%50[^\n]", nome);
 
     if(strlen(nome) > 50) {
         printf("O nome deve ter ate 50 caracteres");
@@ -26,8 +26,10 @@ void criar_tabela() {
     strcat(caminho_tabelas, nome_tratado);
     strcat(caminho_tabelas, ".txt");
 
+    getchar();
+
     FILE* tabela;
-    tabela = fopen(caminho_tabelas, "w");
+    tabela = fopen(caminho_tabelas, "w+");
 
     if (tabela == NULL) {
         printf("\nErro ao abrir o arquivo: %s\n", strerror(errno));
@@ -38,21 +40,25 @@ void criar_tabela() {
         char chavep[21];
         int cols = 1;
         int stop = false;
+
         printf("Quantas colunas existirao na tabela?\n");
-        scanf("%d\n", &cols);
-        printf("%d\n", cols);
+        scanf("%d", &cols);
+        printf("\n%d\n", cols);
+
         for(int i = 0; i < cols; i++) {
             printf("Qual o nome da coluna que sera a chave primaria:\n");
             while(stop == false) {
-                scanf("%[^\n]", chavep);
-                if(chavep != '\0') {
+                fgets(chavep, sizeof(chavep), stdin);
+                //scanf("%[^\n]", chavep);
+                chavep[strcspn(chavep, "\n")] = '\0';
+                if(chavep[0] != '\0') {
                     stop = true;
                 }
             }
             printf("chegou aqui\n");
         }
-        fputs(chavep, tabela);
-        fputs("\n", tabela);
+        //fputs(chavep, tabela);
+        //fputs("\n", tabela);
     }
 
     if (fclose(tabela) != 0) {
