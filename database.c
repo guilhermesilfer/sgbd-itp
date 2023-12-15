@@ -5,73 +5,77 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-#include "minorfunctions.h"
+#include "utils.h"
 
 //Cria uma tabela e insere informações
 void criar_tabela() {
-    char nome[51];
-    char nome_tratado[51];
-    char caminho_tabelas[59] = "Tabelas/";
- 
-    printf("Digite o nome da tabela: \n");
-    scanf("%50[^\n]", nome);
+    char table_name[51];
+    char filename[51];
+    char filepath[59] = "tabelas/";
+    
+    //Pega o nome da tabela
+    printf("Digite o nome da tabela:\n");
+    scanf("%50[^\n]", table_name);
 
-    if(strlen(nome) > 50) {
-        printf("O nome deve ter ate 50 caracteres");
-        return;
-    }
+    //Trata table_name em filename criando o nome do arquivo
+    tratar_nome(table_name, filename); //TODO use english names only!
+    strcat(filepath, filename);
+    printf("\ntable_name: %s |", table_name);
+    printf(" csv: %s |", filename);
+    printf(" filepath: %s\n\n", filepath);
 
-    tratar_nome(nome, nome_tratado);
+    //Início da criação do arquivo da tabela
+    FILE* Table;
+    Table = fopen(filepath, "w+");
 
-    strcat(caminho_tabelas, nome_tratado);
-    strcat(caminho_tabelas, ".txt");
-
-    getchar();
-
-    FILE* tabela;
-    tabela = fopen(caminho_tabelas, "w+");
-
-    if (tabela == NULL) {
-        printf("\nErro ao abrir o arquivo: %s\n", strerror(errno));
-        return;
+    //Checagem da abertura do arquivo
+    if(Table == NULL) {
+        printf("Erro na criacao do arquivo\n\n");
+        return -1;
     }
     else {
-        printf("\nSucesso ao abrir o arquivo\n\n");
-        char chavep[21];
-        int cols = 1;
-        int stop = false;
-
-        printf("Quantas colunas existirao na tabela?\n");
-        scanf("%d", &cols);
-        printf("\n%d\n", cols);
-
-        for(int i = 0; i < cols; i++) {
-            printf("Qual o nome da coluna que sera a chave primaria:\n");
-            while(stop == false) {
-                fgets(chavep, sizeof(chavep), stdin);
-                //scanf("%[^\n]", chavep);
-                chavep[strcspn(chavep, "\n")] = '\0';
-                if(chavep[0] != '\0') {
-                    stop = true;
-                }
-            }
-            printf("chegou aqui\n");
-        }
-        //fputs(chavep, tabela);
-        //fputs("\n", tabela);
+        printf("Sucesso na criacao do arquivo\n\n");
     }
 
-    if (fclose(tabela) != 0) {
-        printf("\nErro ao fechar o arquivo: %s\n", strerror(errno));
+    //Início da impressao da data
+    int cols = 0;
+    printf("Quantas colunas existirao na tabela:\n");
+    scanf("%d", &cols);
+
+    //Escreve os nomes das colunas
+    printf("======== Escreva a seguir os nomes das colunas ========\n");
+    for(int i = 0; i < cols; i++) {
+        if(i == 0)
+            printf("Digite a coluna que sera a chave primaria (Deve ser do tipo inteiro sem sinal):\n");
+        if(i == 1)
+            printf("Digite as outras colunas:\n");
+        char col_name[21] = "";
+        scanf("%s", col_name);
+        fprintf(Table, "%s", col_name);
+        (i == cols - 1) ? fprintf(Table, "\n") : fprintf(Table, ",");
+    }
+
+    //Escreve os tipos das colunas
+    for(int i = 0; i < cols; i++) {
+        printf("Digite para cada coluna o numero do seu respectivo tipo:\n");
+        print_table(1);
+
+    }
+
+    if(fclose(Table) != 0) {
+        printf("Erro ao fechar o arquivo\n");
+        return -1;
     }
     else {
-        printf("\nSucesso ao fechar o arquivo\n");
+        printf("Sucesso ao fechar o arquivo\n");
+        return 0;
     }
+    //Fim da criação do arquivo da tabela
 
     FILE* lista_de_tabelas;
     lista_de_tabelas = fopen("Tabelas/lista.txt", "a");
-    strcat(nome, "\n");
-    fprintf(lista_de_tabelas, nome);
+    strcat(table_name, "\n");
+    fprintf(lista_de_tabelas, table_name);
     fclose(lista_de_tabelas);
 
     return;
