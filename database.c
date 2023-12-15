@@ -357,13 +357,13 @@ void pesquisar_valor(){
 void apagar_tabela(){
     char nome[51];
     char nome_tratado[51];
-    char caminho_tabelas[59] = "Tabelas/";
+    char caminho_tabelas[59] = "tabelas/";
     char line[51];
     char *result;
 
     FILE *lista;
 
-    lista = fopen("Tabelas/lista.txt", "r");
+    lista = fopen("tabelas/lista.txt", "r");
     
     if(lista == NULL) {
         printf("Nao existem tabelas a serem exibidas no momento. (%s)\n", strerror(errno));
@@ -383,8 +383,8 @@ void apagar_tabela(){
     }
     fclose(lista);
 
-    lista = fopen("Tabelas/lista.txt", "r");
-    FILE* lista_teste = fopen("Tabelas/listateste.txt", "w");
+    lista = fopen("tabelas/lista.txt", "r");
+    FILE* lista_teste = fopen("tabelas/listateste.txt", "w");
 
     printf("Lista de Tabelas Disponiveis:\n");
     listar_tabelas();
@@ -398,7 +398,6 @@ void apagar_tabela(){
         result = fgets(line, 51, lista);
         if(result) {
             if(strcmp(nome, line)==0) {
-                strcat(nome_tratado, ".txt");
                 strcat(caminho_tabelas, nome_tratado);
                 remove(caminho_tabelas);
                 i = 0;
@@ -411,8 +410,8 @@ void apagar_tabela(){
     if(i == 0) {
         fclose(lista_teste);
         fclose(lista);
-        lista_teste = fopen("Tabelas/listateste.txt", "r");
-        lista = fopen("Tabelas/lista.txt", "w");
+        lista_teste = fopen("tabelas/listateste.txt", "r");
+        lista = fopen("tabelas/lista.txt", "w");
 
         char Line[51];
         char *resut;
@@ -424,7 +423,7 @@ void apagar_tabela(){
         }
         fclose(lista);
         fclose(lista_teste);
-        remove("Tabelas/listateste.txt");
+        remove("tabelas/listateste.txt");
         printf("\nNova Lista de Tabelas:\n");
         listar_tabelas();
         return;
