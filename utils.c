@@ -27,6 +27,8 @@ int count_cols(char* filepath) {
     cols++;
     printf("A tabela %s tem %d colunas\n", filepath, cols);
 
+    fclose(Table);
+
     return cols;
 }
 
