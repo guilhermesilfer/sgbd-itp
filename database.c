@@ -26,7 +26,41 @@ void criar_tabela() {
     printf(" csv: %s |", filename);
     printf(" filepath: %s\n\n", filepath);
 
-    //Iníc1 da criação do arquivo da tabela
+    //Início da impressao dos dados
+    int cols = 0;
+    printf("Quantas colunas existirao na tabela:\n");
+    scanf("%d", &cols);
+
+    char col_names[cols][21];
+    int col_types[cols];
+
+    //Leitura das colunas
+    printf("======== Escreva a seguir os nomes das colunas ========\n");
+    for(int i = 0; i < cols; i++) {
+        if(i == 0)
+            printf("Digite a coluna que sera a chave primaria (Deve ser do tipo inteiro sem sinal):\n");
+        if(i == 1)
+            printf("Digite as outras colunas:\n");
+        scanf("%s", col_names[i]);
+    }
+
+    //Leitura dos tipos
+    for(int i = 0; i < cols; i++) {
+        printf("Digite o numero do tipo dessa coluna: %s\n", col_names[i]);
+        printf("1 - char | 2 - int | 3 - float | 4 - double\n");
+        int choice = 0;
+        while(true) {
+            scanf("%d", &choice);
+            if(choice != 1 && choice != 2 && choice != 3 && choice != 4) {
+                printf("Digite um numero que corresponda a um tipo\n");
+            } else {
+                break;
+            }
+        }
+        col_types[i] = choice;
+    }
+
+    //Início da criação do arquivo da tabela
     FILE* Table;
     Table = fopen(filepath, "w");
 
@@ -39,72 +73,17 @@ void criar_tabela() {
         printf("Sucesso na criacao do arquivo\n\n");
     }
 
-    //Início da impressao da data
-    int cols = 0;
-    printf("Quantas colunas existirao na tabela:\n");
-    scanf("%d", &cols);
-
-    //Escreve os nomes das colunas
-    printf("======== Escreva a seguir os nomes das colunas ========\n");
+    //Escrever dados
     for(int i = 0; i < cols; i++) {
-        if(i == 0)
-            printf("Digite a coluna que sera a chave primaria (Deve ser do tipo inteiro sem sinal):\n");
-        if(i == 1)
-            printf("Digite as outras colunas:\n");
-        char col_name[21] = "";
-        scanf("%s", col_name);
-        fprintf(Table, "%s", col_name);
+        fprintf(Table, "%s", col_names[i]);
         (i == cols - 1) ? fprintf(Table, "\n") : fprintf(Table, ",");
     }
-    
-    if(fclose(Table) != 0) {
-        printf("Erro ao fechar o arquivo\n");
-        return;
-    }
-    else {
-        printf("Sucesso ao fechar o arquivo\n");
-    }
-
-    Table = fopen(filepath, "r");
-
-    if(Table == NULL) {
-        printf("Erro na criacao do arquivo\n\n");
-        return;
-    }
-    else {
-        printf("Sucesso na criacao do arquivo\n\n");
-    }
-    
-    //Escreve os tipos das colunas
-    printf("======== Digite para cada coluna o numero do seu respectivo tipo: ========\n");
     for(int i = 0; i < cols; i++) {
-        char buffer[100];
-        fgets(buffer, 100, Table);
-        remove_newline_from_string(buffer);
-        char* token = strtok(buffer, ",\n");
-        printf("Buffer: %s\nToken: %s\n", buffer, token);
-        while(token != NULL) {
-            int num = 0;
-            printf("Digite o numero do tipo dessa coluna: %s\n", token);
-            printf("1 - char | 2 - int | 3 - float | 4 - double\n");
-            while(num != 1 && num != 2 && num != 3 && num != 4) {
-                scanf("%d", num);
-                if(num != 1 && num != 2 && num != 3 && num != 4) {
-                    printf("Digite um numero que corresponda ao tipo\n");
-                    num = 0;
-                }
-                else {
-                    fprintf(Table, "%d,", num);
-                }
-            }
-            token = strtok(NULL, ",\n"); //must be the last command of this while()
-            if (token == NULL) {
-                printf("\n");
-                break;
-            }
-        }
+        fprintf(Table, "%d", col_types[i]);
+        (i == cols - 1) ? fprintf(Table, "\n") : fprintf(Table, ",");
     }
 
+    //Fechamento do arquivo
     if(fclose(Table) != 0) {
         printf("Erro ao fechar o arquivo\n");
         return;
@@ -113,12 +92,13 @@ void criar_tabela() {
         printf("Sucesso ao fechar o arquivo\n");
     }
 
-    //Fim da criação do arquivo da tabela
-
+    //Abertura da lista de tabelas
     FILE* lista_de_tabelas;
     lista_de_tabelas = fopen("Tabelas/lista.txt", "a");
     strcat(table_name, "\n");
     fprintf(lista_de_tabelas, table_name);
+
+    //Fechamento da lista de tabelas
     fclose(lista_de_tabelas);
 
     return;
