@@ -181,13 +181,11 @@ void criar_linha_tabela() {
         else if (i == strlen(buffer) - 1) {
             printf(": ");
             scanf("%s", data[counter]);
-            printf("%s\n", data[counter]);
             counter++;
         }
         else {
             printf(": ");
             scanf("%s", data[counter]);
-            printf("%s\n", data[counter]);
             counter++;
         }
         if(counter == cols) break;
@@ -199,10 +197,8 @@ void criar_linha_tabela() {
 
     //fprintf(Table, "Jesus");
 
-    printf("[%s]\n[%s]\n[%s]\n", data[0], data[1], data[2]);
 
     for(int i = 0; i < cols; i++) {
-        printf("%s\n", data[i]);
         fprintf(Table, data[i]);
         (i == cols - 1) ? fprintf(Table, "\n") : fprintf(Table, ",");
     }
