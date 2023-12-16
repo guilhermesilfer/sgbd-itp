@@ -33,6 +33,7 @@ int menu(int op) {
             break;
 
         case 4:
+            listar_dados_tabela();
             break;
 
         case 5:
