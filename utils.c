@@ -20,14 +20,10 @@ int count_cols(char* filepath) {
     for(int i = 0; i < strlen(first_line); i++) {
         if(first_line[0] == '\0') return cols;
         if(first_line[i] == ',') {
-            printf("%c = %c\n", first_line[i], ',');
             cols++;
         }
     }
     cols++;
-    printf("A tabela %s tem %d colunas\n", filepath, cols);
-
-    fclose(Table);
 
     fclose(Table);
     

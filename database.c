@@ -137,7 +137,7 @@ void listar_tabelas() {
     while (!feof(lista)) {
         result2 = fgets(line2, 51, lista);
         if(result2) {
-            printf("\nTABELA %d: %s", i, line2);
+            printf("\n[%d]: %s", i, line2);
             printf("------------------------");
             i++;
         }
@@ -148,50 +148,115 @@ void listar_tabelas() {
 
 //Cria um registro/linha na tabela escolhida
 void criar_linha_tabela() {
-    char nome[51];
-    char nome_tratado[51];
-    char caminho_tabelas[59] = "tabelas/";
-    char *result;
-    char line[51];
-
-    printf("Lista de tabelas disponiveis:\n");
+    printf("Digite o nome da tabela que deseja criar uma nova linha:");
+    printf("Lista de tabelas:");
     listar_tabelas();
-    printf("\nDigite o nome da tabela em que deseja criar uma nova linha: \n");
-    scanf(" %[^\n]", &nome);
-    if(strlen(nome) > 50) {
-        printf("O nome deve ter ate de 50 caracteres");
-        return;
-    }
-    tratar_nome(nome, nome_tratado);
-    strcat(caminho_tabelas, nome_tratado);
-    strcat(caminho_tabelas, ".txt");
+    
+    char name[51] = "";
+    fflush(stdin);
+    printf("\n");
+    scanf("%[^\n]s", name);
 
-    FILE* tabela = fopen(caminho_tabelas, "r+");
-    if (tabela == NULL) {
-        printf("\nErro ao abrir o arquivo: %s\n", strerror(errno));
-        return;
-    }
-    if(tabela){
-        char line[51];
-        char dado[5];
-        fgets(line, 51, tabela);
-    while(!feof(tabela)){
-        result = fgets(line, 51, tabela);
-        if(!result){
-            printf("\nDigite: %s", line);
-            scanf(" %[^\n]", &dado);
-            strcat(dado, "\n");
-            fputs(dado, tabela);
-            fclose(tabela);
-            break;
+    
+    char filepath[59] = "tabelas/";
+    strcat(name, ".csv");
+    strcat(filepath, name);
+
+    FILE* Table = fopen(filepath, "r");
+    
+    char buffer[1000] = "";
+
+    int cols = count_cols(filepath);
+    char data[cols][15];
+
+    fgets(buffer, 1000, Table);
+    fclose(Table);
+    printf("\n%s\n", buffer);
+
+    printf("Digite as informacoes da linha em cada coluna\n\n");
+    int counter = 0;
+    for(int i = 0; i < strlen(buffer); i++) {
+        if(buffer[i] != ',' && i != strlen(buffer) - 1)
+            printf("%c", buffer[i]);
+        else if (i == strlen(buffer) - 1) {
+            printf(": ");
+            scanf("%s", data[counter]);
+            printf("%s\n", data[counter]);
+            counter++;
         }
+        else {
+            printf(": ");
+            scanf("%s", data[counter]);
+            printf("%s\n", data[counter]);
+            counter++;
+        }
+        if(counter == cols) break;
     }
-    return;
+
+    fflush(stdin);
+
+    Table = fopen(filepath, "a");
+
+    //fprintf(Table, "Jesus");
+
+    printf("[%s]\n[%s]\n[%s]\n", data[0], data[1], data[2]);
+
+    for(int i = 0; i < cols; i++) {
+        printf("%s\n", data[i]);
+        fprintf(Table, data[i]);
+        (i == cols - 1) ? fprintf(Table, "\n") : fprintf(Table, ",");
     }
-    else{
-        printf("Essa tabela nao existe!\n");
-        return;
-    }
+
+    //for(int i = 0; i < cols; i++) {
+    //    fprintf(Table, "%s", col_names[i]);
+    //    (i == cols - 1) ? fprintf(Table, "\n") : fprintf(Table, ",");
+    //}
+
+    fclose(Table);
+//======================================================================================
+    //char nome[51];
+    //char nome_tratado[51];
+    //char caminho_tabelas[59] = "tabelas/";
+    //char *result;
+    //char line[51];
+
+    //printf("Lista de tabelas disponiveis:\n");
+    //listar_tabelas();
+    //printf("\nDigite o nome da tabela em que deseja criar uma nova linha: \n");
+    //scanf(" %[^\n]", &nome);
+    //if(strlen(nome) > 50) {
+    //    printf("O nome deve ter ate de 50 caracteres");
+    //    return;
+    //}
+    //tratar_nome(nome, nome_tratado);
+    //strcat(caminho_tabelas, nome_tratado);
+
+    //FILE* tabela = fopen(caminho_tabelas, "r+");
+    //if (tabela == NULL) {
+    //    printf("\nErro ao abrir o arquivo: %s\n", strerror(errno));
+    //    return;
+    //}
+    //if(tabela){
+    //    char line[51];
+    //    char dado[5];
+    //    fgets(line, 51, tabela);
+    //while(!feof(tabela)){
+    //    result = fgets(line, 51, tabela);
+    //    if(!result){
+    //        printf("\nDigite: %s", line);
+    //        scanf(" %[^\n]", &dado);
+    //        strcat(dado, "\n");
+    //        fputs(dado, tabela);
+    //        fclose(tabela);
+    //        break;
+    //    }
+    //}
+    //return;
+    //}
+    //else{
+    //    printf("Essa tabela nao existe!\n");
+    //    return;
+    //}
     
 }
 
@@ -211,8 +276,7 @@ void listar_dados_tabela(){
     FILE* tabela = fopen(filepath, "r");
     if(tabela){
         fclose(tabela);
-        int *cols;
-        count_cols(filepath, &cols);
+        int cols = count_cols(filepath);
         printf("%d", cols);
         print_table(filepath, cols);
     }
