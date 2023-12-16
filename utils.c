@@ -10,13 +10,13 @@ void remove_newline_from_string(char* str) {
     }
 }
 
-int count_cols(char* filepath, int cols) {
+int count_cols(char* filepath) {
     FILE* Table = fopen(filepath, "r");
     if(Table == NULL) printf("in count_cols: Erro ao abrir o arquivo");
     char first_line[100] = "";
     fgets(first_line, 100, Table);
     
-    cols = 0;
+    int cols = 0;
     for(int i = 0; i < strlen(first_line); i++) {
         if(first_line[0] == '\0') return cols;
         if(first_line[i] == ',') {
