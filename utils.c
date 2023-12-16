@@ -16,7 +16,7 @@ int count_cols(char* filepath) {
     char first_line[100] = "";
     fgets(first_line, 100, Table);
     
-    cols = 0;
+    int cols = 0;
     for(int i = 0; i < strlen(first_line); i++) {
         if(first_line[0] == '\0') return cols;
         if(first_line[i] == ',') {

@@ -37,9 +37,11 @@ int menu(int op) {
             break;
 
         case 5:
+            pesquisar_valor();
             break;
 
         case 6:
+            apagar_linha();
             break;
             
         case 7:
