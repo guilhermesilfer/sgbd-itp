@@ -10,7 +10,7 @@ void remove_newline_from_string(char* str) {
     }
 }
 
-int count_cols(char* filepath, int cols) {
+int count_cols(char* filepath) {
     FILE* Table = fopen(filepath, "r");
     if(Table == NULL) printf("in count_cols: Erro ao abrir o arquivo");
     char first_line[100] = "";
@@ -67,30 +67,6 @@ void print_table(char* filepath, int cols) {
     }
 
     fclose(Table);
-}
-
-//Usuário seleciona o tipo da coluna
-void select_type(FILE* Table) {
-    char buffer[1000];
-    int num = 0;
-    while(fgets(buffer, 1000, Table)) {
-        remove_newline_from_string(buffer);
-        char* token = strtok(buffer, ",\n");
-        printf("Buffer: %s\nToken: %s\n", buffer, token);
-        while(token != NULL) {
-            printf("entrou\n");
-            printf("Qual o tipo dessa coluna?: %s\n", token);
-            printf("1 - char\n2 - int\n3 - float\n4 - double\n");
-            while(num != 1 || num != 2 || num != 3 || num != 4) {
-                scanf("%d", num);
-                if(num != 1 && num != 2 && num != 3 && num != 4)
-                    printf("Digite um numero que corresponda ao tipo\n");
-            }
-            fprintf(Table, "%d,", num);
-            token = strtok(NULL, ",\n"); //must be the last command of this while()
-            if (token == NULL) printf("\n");
-        }
-    }
 }
 
 char find_type(int num) {

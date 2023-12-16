@@ -263,9 +263,9 @@ void listar_dados_tabela(){
     char filepath[59] = "tabelas/";
     //char *result;
     //char line[51];
-
+    listar_tabelas();
     printf("Digite o nome da tabela que deseja ver:\n");
-    scanf(" %[^\n]", &table_name);
+    scanf(" %[^\n]s", table_name);
     tratar_nome(table_name, filename);
     strcat(filepath, filename);
 
